@@ -8,7 +8,7 @@
 #include <list>
 using namespace std;
 
-bool debug = true, debug_precise  = false; int FILE_SIZE = 100000;
+bool debug = false, debug_precise  = false; int FILE_SIZE = 100000;
 
 int sum_ascii(string);
 
@@ -16,7 +16,7 @@ int main() {
     int total_ascii = 0;
     string temp_str;
 
-    ifstream iFile("lab-37-data.txt");
+    ifstream iFile("lab-37-data-2.txt");
     if(!iFile){
         cout << "Error opening file. Program ending...\n";
         return -1;
@@ -30,7 +30,7 @@ int main() {
 
     for (int i = 0; i < FILE_SIZE; i++){
         getline(iFile, temp_str);
-        total_ascii = sum_ascii(temp_str);
+        total_ascii += sum_ascii(temp_str);
     }
     iFile.close();
     cout << "Total Ascii Sum: " << total_ascii << endl;
