@@ -8,17 +8,38 @@
 #include <list>
 using namespace std;
 
-bool debug = true;
+bool debug = true, debug_precise  = false; int FILE_SIZE = 100000;
 
 int sum_ascii(string);
 
 int main() {
-    string test = "666D109AA22E";
+    int total_ascii = 0;
+    string temp_str;
+
+    ifstream iFile("lab-37-data.txt");
+    if(!iFile){
+        cout << "Error opening file. Program ending...\n";
+        return -1;
+
+    }
+
+    if(debug){
+
+        cout << "File Opened\n";
+    }
+
+    for (int i = 0; i < FILE_SIZE; i++){
+        getline(iFile, temp_str);
+        total_ascii = sum_ascii(temp_str);
+    }
+    iFile.close();
+    cout << "Total Ascii Sum: " << total_ascii << endl;
+
 
     char a = 'A';
     cout << a << endl;
     cout << (int) a << endl;
-    int b = sum_ascii(test);
+    int b = 55;
     cout << b << endl;
     cout << (char) b << endl;
     return 0;
@@ -34,7 +55,7 @@ int sum_ascii(string str){
         cout << "Calculating ascii sum for: " << str << endl;
     }
     for (char c : str){
-        if(debug){
+        if(debug_precise){
             cout << " Char " << count++ << ": " << c << " Ascii: " << (int) c << endl;
 
         }
