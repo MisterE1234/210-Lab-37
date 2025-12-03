@@ -8,7 +8,7 @@
 #include <list>
 using namespace std;
 
-bool debug = false, debug_precise  = false; int FILE_SIZE = 100000;
+bool debug = false, debug_precise  = false; 
 
 int sum_ascii(string);
 
@@ -28,7 +28,7 @@ int main() {
         cout << "File Opened\n";
     }
 
-    for (int i = 0; i < FILE_SIZE; i++){
+    while (!iFile.eof()){
         getline(iFile, temp_str);
         total_ascii += sum_ascii(temp_str);
     }
