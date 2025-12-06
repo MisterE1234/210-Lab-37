@@ -8,6 +8,7 @@
 #include <list>
 using namespace std;
 
+//universal variables:
 bool debug = false, debug_precise  = false; 
 
 int sum_ascii(string);
