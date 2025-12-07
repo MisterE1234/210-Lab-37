@@ -255,16 +255,26 @@ void add_key(map<int, list<string>>& hash_table){
     auto search = hash_table.find(new_key);
 
     if(search != hash_table.end()){
-        
+        cout << "Key already exists! cannot add duplicate.\n";
+        return;
     }
 
+    //if it does not exist:
+    //Asking the user if they want to add a string to the new key:
     cout << "Would you like to add a string to this key? (Y/N): ";
     cin >> choice;
-    if(choice == "Y" || choice == "y"){
+    if(choice == "Y" || choice == "y"){ // if yes:
         cout << "Enter the new string: ";
         cin >> choice; //reusing choice
-        hash_table[new_key].push_back(choice); // creates 
+        hash_table[new_key].push_back(choice); // creates the new key with the string.
+        return;
 
+    } //if no:
+    else if(choice == "N" || choice == "n"){
+        cout << "Adding key with no strings.\n";
+    }
+    else{ // if invalid input:
+        cout << "Invalid choice. Adding key with no strings.\n";
     }
 
     hash_table[new_key];//Creates a new entry in the hash table
