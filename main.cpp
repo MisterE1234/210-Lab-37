@@ -12,6 +12,7 @@ using namespace std;
 bool debug = false, debug_precise  = false;  int ENTRY_AMOUNT = 100;
 
 int gen_hash_index(string);
+int menu();
 
 int main() {
     map<int, list<string>> hash_table; //hash table: the int is the ascii value of the string
@@ -101,6 +102,42 @@ int gen_hash_index(string str){
 
     return sum;
 
+}
+
+int menu(){
+    int choice = 0;
+    bool valid = false;
+
+    cout << "Menu:\n"
+    << "[1] Display First 100 Entries\n"
+    << "[2] Search for a Key\n"
+    << "[3] Add a Key\n"
+    << "[4] Delete a Key\n"
+    << "[5] Modify a Key\n"
+    << "[0] Exit Program\n"
+    << "Enter your choice: ";
+
+    //using a while loop to validate the user's response:
+    while(!valid){
+        cout << "Which would you like (0-5)?: ";
+        cin >> choice;
+
+        if(cin.fail()){ //if not an integer:
+            cin.clear();
+            cin.ignore(10000,'\n');
+            cout << "Invalid Entry. Not an Integer. Try again\n";
+        }
+        else if(choice > 5 || choice < 0){ // if not an option in the menu:
+            cout << "Invalid Entry. Not within range. Try again\n";
+        }
+        else{// if correct:
+            valid = true;
+        }
+    }
+
+    cin.ignore(10000, '\n');// clearing the input buffer for futer getline()
+
+    return choice;
 }
 /*
 These targets are present in the dataset and can be used for testing:
