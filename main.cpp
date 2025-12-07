@@ -13,7 +13,7 @@ bool debug = false, debug_precise  = false;  int ENTRY_AMOUNT = 100;
 
 int gen_hash_index(string);
 void display_hash_table(map<int, list<string>>&);
-void key_search(map<int, list<string>>&);
+void search_key(map<int, list<string>>&);
 int menu();
 
 int main() {
@@ -58,7 +58,7 @@ int main() {
                 display_hash_table(hash_table);
                 break;
             case 2: //search for a key:
-
+                search_key(hash_table);
                 break;
             case 3: //add a key:
                 break;
