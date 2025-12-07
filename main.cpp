@@ -14,6 +14,7 @@ bool debug = false, debug_precise  = false;  int ENTRY_AMOUNT = 100;
 int gen_hash_index(string);
 void display_hash_table(map<int, list<string>>&);
 void search_key(map<int, list<string>>&);
+void add_key(map<int, list<string>>&);
 int menu();
 
 int main() {
@@ -61,6 +62,7 @@ int main() {
                 search_key(hash_table);
                 break;
             case 3: //add a key:
+                add_key(hash_table);
                 break;
             case 4: //delete a key:
                 break;
@@ -144,7 +146,6 @@ int menu(){
         }
     }
 
-    cin.ignore(10000, '\n');// clearing the input buffer for futer getline()
 
     return choice;
 }
@@ -193,7 +194,7 @@ void search_key(map<int, list<string>>& hash_table){
     
     //using a while loop to validate the user's response:
     while(!valid){
-        cout << "Enter the ascii key to search for: ";
+        cout << "Enter the ascii (integer) key to search for: ";
         cin >> target;
 
         if(cin.fail()){ //if not an integer:
@@ -206,7 +207,6 @@ void search_key(map<int, list<string>>& hash_table){
         }
     }
 
-    cin.ignore(10000, '\n');// clearing the input buffer for futer getline()
 
     auto search = hash_table.find(target);
 
@@ -228,7 +228,49 @@ void search_key(map<int, list<string>>& hash_table){
     }
     cout << endl;
 
+}
+
+
+void add_key(map<int, list<string>>& hash_table){
+    int new_key;
+    string choice;
+    bool valid = false;
+
+    //using a while loop to validate the user's response:
+    while(!valid){
+        cout << "Enter the new ascii (integer) key to add: ";
+        cin >> new_key;
+
+        if(cin.fail()){ //if not an integer:
+            cin.clear();
+            cin.ignore(10000,'\n');
+            cout << "Invalid Entry. Not an Integer. Try again\n";
+        }
+        else{// if correct:
+            valid = true;
+        }
     }
+
+    //need to check if the key already exists:
+    auto search = hash_table.find(new_key);
+
+    if(search != hash_table.end()){
+        
+    }
+
+    cout << "Would you like to add a string to this key? (Y/N): ";
+    cin >> choice;
+    if(choice == "Y" || choice == "y"){
+        cout << "Enter the new string: ";
+        cin >> choice; //reusing choice
+        hash_table[new_key].push_back(choice); // creates 
+
+    }
+
+    hash_table[new_key];//Creates a new entry in the hash table
+
+}
+
 /*
 These targets are present in the dataset and can be used for testing:
 536B9DFC93AF 
