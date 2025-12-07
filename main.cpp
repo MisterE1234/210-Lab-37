@@ -31,7 +31,7 @@ int main() {
         cout << "File Opened\n";
     }
 
-    for (int i = 0; i < ENTRY_AMOUNT; i++){
+    while(!iFile.eof()){
         getline(iFile, temp_str);
         hash_table[gen_hash_index(temp_str)].push_back(temp_str);
         
@@ -41,8 +41,14 @@ int main() {
         cout << "File Closed\n";
     }
 
-    //displaying the has_table contents:
+    //displaying the first 100 entries in hash_table:
+    int counter = 0;
     for (auto const pair : hash_table){
+        
+        if(counter++ >= ENTRY_AMOUNT){
+            break;
+        }
+
         cout << "ACII Value: " << pair.first << " -> ";
         for (auto str : pair.second){
             int i = 0;
