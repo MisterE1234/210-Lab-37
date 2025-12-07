@@ -12,6 +12,8 @@ using namespace std;
 bool debug = false, debug_precise  = false;  int ENTRY_AMOUNT = 100;
 
 int gen_hash_index(string);
+void display_hash_table(map<int, list<string>>&);
+void key_search(map<int, list<string>>&);
 int menu();
 
 int main() {
@@ -20,7 +22,6 @@ int main() {
     
     string temp_str;
     bool exit = false;
-    int counter = 0;
 
     ifstream iFile("lab-37-data-2.txt");
     if(!iFile){
@@ -54,33 +55,10 @@ int main() {
             case 1: // display 100 entries:
                 //displaying the first 100 entries in hash_table:
                 
-                for (auto const& pair : hash_table){
-        
-                    if( counter >= ENTRY_AMOUNT){
-                        break;
-                    }
-                    int i = 0;
-
-                    cout << "ACII Value: " << pair.first << " -> ";
-                    for (auto str : pair.second){
-            
-                        cout << str; // displaying the current string
-
-                        //checking if there is more strings with the same ascii value to display:
-                        if( i != pair.second.size() - 1){ // if the current string is not the final string:
-                        cout << ", ";  
-                        }
-                        i++; //adding to the counter
-                    }
-                    cout << endl << endl;
-                    i = 0;
-                    counter++;
-                }
-                if(debug){
-                    cout << counter << " entries displayed. \n ";
-                }
+                display_hash_table(hash_table);
                 break;
             case 2: //search for a key:
+
                 break;
             case 3: //add a key:
                 break;
@@ -170,6 +148,51 @@ int menu(){
 
     return choice;
 }
+
+
+//display_hash_table() displays the first 100 entries in the hash_table
+//requires: a map<int, list<string>> passed by reference
+//returns: nothing
+void display_hash_table(map<int, list<string>>& hash_table){
+    int counter = 0;
+    for (auto const& pair : hash_table){
+        
+        if( counter >= ENTRY_AMOUNT){// checking if 100 map entries have been displayed
+            break;
+        }
+
+        int i = 0;
+
+        cout << "ACII Value: " << pair.first << " -> ";
+        for (auto str : pair.second){
+            
+            cout << str; // displaying the current string
+
+            //checking if there is more strings with the same ascii value to display:
+            if( i != pair.second.size() - 1){ // if the current string is not the final string:
+                cout << ", ";  
+            }
+            i++; //adding to the counter
+        }
+        cout << endl << endl;
+        i = 0;
+        counter++;
+    }
+    if(debug){
+        cout << counter << " entries displayed. \n ";
+    }
+}
+
+void search_key(map<int, list<string>>& hash_table){
+    string target;
+    cout << "Enter the key to search for: ";
+    getline(cin, target);
+
+    int target_index = gen_hash_index(target);
+
+    auto search = hash_table.find(target_index);
+
+    }
 /*
 These targets are present in the dataset and can be used for testing:
 536B9DFC93AF 
