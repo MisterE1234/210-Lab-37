@@ -42,13 +42,30 @@ int main() {
     }
 
     //displaying the has_table contents:
-    for (auto pair : hash_table){
+    for (auto const pair : hash_table){
         cout << "ACII Value: " << pair.first << " -> ";
         for (auto str : pair.second){
-            cout << str << ", ";
+            int i = 0;
+
+            cout << str; // displaying the current string
+
+            //checking if there is more strings with the same ascii value to display:
+            if( i != pair.second.size() -1){ // if the current string is not the final string:
+              cout << ", ";  
+            }
+            else { // if the current string is the last string:
+                cout << endl;
+            }
+            i++; //adding to the counter
         }
     }
 
+
+    //clearing hash_table:
+    for(auto & pair : hash_table){
+        pair.second.clear();
+    }
+    hash_table.clear();
 
     
     return 0;
