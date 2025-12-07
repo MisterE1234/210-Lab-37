@@ -50,17 +50,16 @@ int main() {
             cout << str; // displaying the current string
 
             //checking if there is more strings with the same ascii value to display:
-            if( i != pair.second.size() -1){ // if the current string is not the final string:
+            if( i != pair.second.size() - 1){ // if the current string is not the final string:
               cout << ", ";  
-            }
-            else { // if the current string is the last string:
-                cout << endl;
             }
             i++; //adding to the counter
         }
+        cout << endl;
+        int i = 0;
     }
 
-
+    cout << "\nProgram Ending...\n";
     //clearing hash_table:
     for(auto & pair : hash_table){
         pair.second.clear();
