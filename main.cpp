@@ -1,6 +1,6 @@
-//COMSC-210|Ethan Aylard|Lab-37
+//COMSC-210|Ethan Aylard|Lab-38
 //IDE used: Visual Studio Code
-//This Program will use Hash Tables to sort and store data from an external file.
+//This Program will use Hash Tables to sort and store data from an external file. Now with an interactive menu!
 
 #include <iostream>
 #include <fstream>
