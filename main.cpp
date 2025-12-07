@@ -19,6 +19,8 @@ int main() {
 
     
     string temp_str;
+    bool exit = false;
+    int counter = 0;
 
     ifstream iFile("lab-37-data-2.txt");
     if(!iFile){
@@ -42,36 +44,62 @@ int main() {
         cout << "File Closed\n";
     }
 
-    //displaying the first 100 entries in hash_table:
-    int counter = 0;
-    for (auto const& pair : hash_table){
+
+    while(!exit){
+        switch(menu()){
+
+            case 0: //exit program:
+                exit = true;
+                break;
+            case 1: // display 100 entries:
+                //displaying the first 100 entries in hash_table:
+                
+                for (auto const& pair : hash_table){
         
-        if( counter >= ENTRY_AMOUNT){
-            break;
-        }
-        int i = 0;
+                    if( counter >= ENTRY_AMOUNT){
+                        break;
+                    }
+                    int i = 0;
 
-        cout << "ACII Value: " << pair.first << " -> ";
-        for (auto str : pair.second){
+                    cout << "ACII Value: " << pair.first << " -> ";
+                    for (auto str : pair.second){
             
+                        cout << str; // displaying the current string
 
-            cout << str; // displaying the current string
-
-            //checking if there is more strings with the same ascii value to display:
-            if( i != pair.second.size() - 1){ // if the current string is not the final string:
-              cout << ", ";  
-            }
-            i++; //adding to the counter
+                        //checking if there is more strings with the same ascii value to display:
+                        if( i != pair.second.size() - 1){ // if the current string is not the final string:
+                        cout << ", ";  
+                        }
+                        i++; //adding to the counter
+                    }
+                    cout << endl << endl;
+                    i = 0;
+                    counter++;
+                }
+                if(debug){
+                    cout << counter << " entries displayed. \n ";
+                }
+                break;
+            case 2: //search for a key:
+                break;
+            case 3: //add a key:
+                break;
+            case 4: //delete a key:
+                break;
+            case 5: // modify a key:
+                break;
+            
+            default:
+                cout << "Error! wrong switch case. Program stopping...\n";
+                exit = true;
+                break;
+            
         }
-        cout << endl << endl;
-        i = 0;
-        counter++;
-    }
-    if(debug){
-        cout << counter << " entries displayed. \n ";
     }
 
-    cout << "\nProgram Ending...\n";
+    
+
+    
     //clearing hash_table:
     for(auto & pair : hash_table){
         pair.second.clear();
@@ -104,6 +132,9 @@ int gen_hash_index(string str){
 
 }
 
+//menu() displays the user menu and validates their input
+//requires: nothing
+//returns: an integer value
 int menu(){
     int choice = 0;
     bool valid = false;
