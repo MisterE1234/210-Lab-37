@@ -183,14 +183,50 @@ void display_hash_table(map<int, list<string>>& hash_table){
     }
 }
 
+//search_key() searches for a ascii value provided by the user in hash_table
+//requires: a map<int, list<string>> passed by reference
+//returns: nothing
 void search_key(map<int, list<string>>& hash_table){
-    string target;
-    cout << "Enter the key to search for: ";
-    getline(cin, target);
+    int target;
+    bool valid = false;
 
-    int target_index = gen_hash_index(target);
+    
+    //using a while loop to validate the user's response:
+    while(!valid){
+        cout << "Enter the ascii key to search for: ";
+        cin >> target;
 
-    auto search = hash_table.find(target_index);
+        if(cin.fail()){ //if not an integer:
+            cin.clear();
+            cin.ignore(10000,'\n');
+            cout << "Invalid Entry. Not an Integer. Try again\n";
+        }
+        else{// if correct:
+            valid = true;
+        }
+    }
+
+    cin.ignore(10000, '\n');// clearing the input buffer for futer getline()
+
+    auto search = hash_table.find(target);
+
+    if(search != hash_table.end()){
+        int i = 0;
+        cout << "Key found. Searching entries with ascii value " << target << ":\n";
+        for (auto str : search->second){
+            cout << str; // displaying the current string
+
+            //checking if there is more strings with the same ascii value to display:
+            if( i != search->second.size() - 1){ // if the current string is not the final string:
+                cout << ", ";  
+            }
+            i++; //adding to the counter
+        }
+    }
+    else{
+        cout << "Key not found in dataset.\n";
+    }
+    cout << endl;
 
     }
 /*
