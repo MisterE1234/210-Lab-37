@@ -62,11 +62,13 @@ int main() {
             }
             i++; //adding to the counter
         }
-        cout << endl;
+        cout << endl << endl;
         i = 0;
         counter++;
     }
-    cout << counter << " entriest displayed. \n ";
+    if(debug){
+        cout << counter << " entries displayed. \n ";
+    }
 
     cout << "\nProgram Ending...\n";
     //clearing hash_table:
