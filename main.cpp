@@ -43,15 +43,16 @@ int main() {
 
     //displaying the first 100 entries in hash_table:
     int counter = 0;
-    for (auto const pair : hash_table){
+    for (auto const& pair : hash_table){
         
-        if(counter++ >= ENTRY_AMOUNT){
+        if( counter >= ENTRY_AMOUNT){
             break;
         }
+        int i = 0;
 
         cout << "ACII Value: " << pair.first << " -> ";
         for (auto str : pair.second){
-            int i = 0;
+            
 
             cout << str; // displaying the current string
 
@@ -62,8 +63,10 @@ int main() {
             i++; //adding to the counter
         }
         cout << endl;
-        int i = 0;
+        i = 0;
+        counter++;
     }
+    cout << counter << " entriest displayed. \n ";
 
     cout << "\nProgram Ending...\n";
     //clearing hash_table:
