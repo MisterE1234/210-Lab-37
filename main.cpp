@@ -9,12 +9,13 @@
 using namespace std;
 
 //universal variables:
-bool debug = false, debug_precise  = false;  int ENTRY_AMOUNT = 100;
+bool debug = false, debug_precise  = false;  int ENTRY_AMOUNT = 100, DISPLAY_NUM = 5;
 
 int gen_hash_index(string);
 void display_hash_table(map<int, list<string>>&);
 void search_key(map<int, list<string>>&);
 void add_key(map<int, list<string>>&);
+void remove_key(map<int, list<string>>&);
 int menu();
 
 int main() {
@@ -163,17 +164,21 @@ void display_hash_table(map<int, list<string>>& hash_table){
         }
 
         int i = 0;
-
-        cout << "ACII Value: " << pair.first << " -> ";
-        for (auto str : pair.second){
+        if(pair.second.size() > DISPLAY_NUM){
+            cout << "ACII Value: " << pair.first << ": " << pair.second.size() << " Entries";
+        }
+        else{
+            cout << "ACII Value: " << pair.first << " -> ";
+            for (auto str : pair.second){
             
-            cout << str; // displaying the current string
+                cout << str; // displaying the current string
 
-            //checking if there is more strings with the same ascii value to display:
-            if( i != pair.second.size() - 1){ // if the current string is not the final string:
-                cout << ", ";  
+                //checking if there is more strings with the same ascii value to display:
+                if( i != pair.second.size() - 1){ // if the current string is not the final string:
+                    cout << ", ";  
+                }
+                i++; //adding to the counter
             }
-            i++; //adding to the counter
         }
         cout << endl << endl;
         i = 0;
@@ -282,6 +287,10 @@ void add_key(map<int, list<string>>& hash_table){
     hash_table[new_key];//Creates a new entry in the hash table
 
 }
+
+
+
+
 
 /*
 These targets are present in the dataset and can be used for testing:
