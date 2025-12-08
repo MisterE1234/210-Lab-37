@@ -19,6 +19,9 @@ void remove_key(map<int, list<string>>&);
 void modify_key(map<int, list<string>>&);
 int menu();
 int modify_menu();
+void modify_entry(map<int, list<string>>&, int);
+void add_entry(map<int, list<string>>&, int);
+void remove_entry(map<int, list<string>>&, int);
 
 int main() {
     map<int, list<string>> hash_table; //hash table: the int is the ascii value of the string
@@ -412,7 +415,7 @@ void modify_key(map<int, list<string>>& hash_table){
                     cout << "Exiting the Modify Menu...\n";
                     break;
                 case 1://modify entry
-                
+
                     break;
                 case 2://add entry
                     break;
@@ -449,7 +452,9 @@ void modify_key(map<int, list<string>>& hash_table){
     }
 
 }
-
+//modify_menu() displays the menu to modify a specfic key and validates user input
+//requires:nothing
+//returns:nothing
 int modify_menu(){
     int choice = 0;
     bool valid = false;
@@ -482,6 +487,38 @@ int modify_menu(){
 
     return choice;
 }
+
+//modify_entry() modifies a specific entry within a key in the hash_table
+//requires: a map<int, list<string>> passed by reference and an integer key
+//returns: nothing
+void modify_entry(map<int, list<string>>& hash_table, int key){
+    string target_str, new_str;
+    bool found = false;
+    cin.ignore(10000, '\n');
+
+    cout << "Enter the string you want modified: ";
+    getline(cin, target_str);
+
+    //searching for the target string:
+    for(auto & search : hash_table[key]){
+        if(search == target_str){ //if found
+            cout << "String found. Enter the new string: ";
+            getline(cin, new_str);
+            search = new_str;
+            found = true;
+            cout << "String modified successfully.\n";
+        }
+    }
+
+    //if not found
+    if(!found){
+        cout <<  "String not found...\n";
+    }
+
+
+}
+
+
 
 
 
