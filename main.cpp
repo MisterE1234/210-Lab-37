@@ -18,6 +18,7 @@ void add_key(map<int, list<string>>&);
 void remove_key(map<int, list<string>>&);
 void modify_key(map<int, list<string>>&);
 int menu();
+int modify_menu();
 
 int main() {
     map<int, list<string>> hash_table; //hash table: the int is the ascii value of the string
@@ -402,7 +403,28 @@ void modify_key(map<int, list<string>>& hash_table){
             i++; //adding to the counter
         }
 
-        switch(){}
+        valid = false;
+
+        while(!valid){
+            switch(modify_menu()){
+                case 0://exit modify menu
+                    valid = true;
+                    cout << "Exiting the Modify Menu...\n";
+                    break;
+                case 1://modify entry
+                
+                    break;
+                case 2://add entry
+                    break;
+                case 3: //remove entry
+                    break;
+                default: //error contengcy
+                    cout << "Error! wrong switch case. Exiting Modify Menu...\n";
+                    valid = true;
+                    break;
+            
+        }
+        }
 
         cout << "\nDo you want to remove the key " << target << "?(Y/N): ";
 
@@ -436,11 +458,12 @@ int modify_menu(){
     << "[1] Change Entry\n"
     << "[2] Add Entry\n"
     << "[3] Remove Entry\n"
+    << "[0] Exit Modify Menu\n"
     << "Enter your choice: ";
 
     //using a while loop to validate the user's response:
     while(!valid){
-        cout << "Which would you like (1-3)?: ";
+        cout << "Which would you like (0-3)?: ";
         cin >> choice;
 
         if(cin.fail()){ //if not an integer:
