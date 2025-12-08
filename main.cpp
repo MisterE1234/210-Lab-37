@@ -22,7 +22,7 @@ int modify_menu();
 void modify_entry(map<int, list<string>>&, int);
 void add_entry(map<int, list<string>>&, int);
 void remove_entry(map<int, list<string>>&, int);
-void display_entries(map<int, list<string>>&, int, auto);
+void display_entries(map<int, list<string>>&, int, auto&);
 
 int main() {
     map<int, list<string>> hash_table; //hash table: the int is the ascii value of the string
@@ -395,17 +395,10 @@ void modify_key(map<int, list<string>>& hash_table){
 
     //If there is key exists:
     if(search != hash_table.end()){
-        int i = 0;
-        cout << "Key found. Displaying entries with Key value:" << target << ":\n";
-        for (auto str : search->second){
-            cout << str; // displaying the current string
-
-            //checking if there is more strings with the same ascii value to display:
-            if( i != search->second.size() - 1){ // if the current string is not the final string:
-                cout << ", ";  
-            }
-            i++; //adding to the counter
-        }
+       
+        cout << "Key found.";
+        display_entries(hash_table, target, search);
+        
 
         valid = false;
 
@@ -422,6 +415,10 @@ void modify_key(map<int, list<string>>& hash_table){
                     add_entry(hash_table, target);
                     break;
                 case 3: //remove entry
+                    remove_entry(hash_table, target);
+                    break;
+                case 4: //display entries
+                    display_entries(hash_table, target, search);
                     break;
                 default: //error contengcy
                     cout << "Error! wrong switch case. Exiting Modify Menu...\n";
@@ -474,9 +471,9 @@ int modify_menu(){
     return choice;
 }
 
-void display_entries(map<int, list<string>>& hash_table, int key, auto search){
+void display_entries(map<int, list<string>>& hash_table, int key){
     int i = 0;
-        cout << "Key found. Displaying entries with Key value:" << key << ":\n";
+        cout << "Displaying entries:\n";
         for (auto str : search->second){
             cout << str; // displaying the current string
 
@@ -486,6 +483,7 @@ void display_entries(map<int, list<string>>& hash_table, int key, auto search){
             }
             i++; //adding to the counter
         }
+        cout << endl;
 }
 
 //modify_entry() modifies a specific entry within a key in the hash_table
@@ -530,6 +528,32 @@ void add_entry(map<int, list<string>>& hash_table, int key){
 
     hash_table[key].push_back(new_str);
 
+}
+
+//add_entry() remove specific entry within a key in the hash_table
+//requires: a map<int, list<string>> passed by reference and an integer key
+//returns: nothing
+void remove_entry(map<int, list<string>>& hash_table, int key){
+    string target_str;
+    bool found = false;
+    cin.ignore(10000, '\n');
+
+    cout << "Enter the string you want removed: ";
+    getline(cin, target_str);
+
+    //searching for the target string using a range-based for loop:
+    for(auto & search : hash_table[key]){
+        if(search == target_str){ //if found
+            hash_table[key].remove(search);
+            found = true;
+            cout << "String removed successfully.\n";
+        }
+    }
+
+    //if not found
+    if(!found){
+        cout <<  "String not found...\n";
+    }
 }
 
 
