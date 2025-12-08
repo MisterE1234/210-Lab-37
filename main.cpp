@@ -22,6 +22,7 @@ int modify_menu();
 void modify_entry(map<int, list<string>>&, int);
 void add_entry(map<int, list<string>>&, int);
 void remove_entry(map<int, list<string>>&, int);
+void display_entries(map<int, list<string>>&, int, auto);
 
 int main() {
     map<int, list<string>> hash_table; //hash table: the int is the ascii value of the string
@@ -415,9 +416,10 @@ void modify_key(map<int, list<string>>& hash_table){
                     cout << "Exiting the Modify Menu...\n";
                     break;
                 case 1://modify entry
-
+                    modify_entry(hash_table, target);
                     break;
                 case 2://add entry
+                    add_entry(hash_table, target);
                     break;
                 case 3: //remove entry
                     break;
@@ -426,30 +428,13 @@ void modify_key(map<int, list<string>>& hash_table){
                     valid = true;
                     break;
             
+            }
         }
-        }
-
-        cout << "\nDo you want to remove the key " << target << "?(Y/N): ";
-
-        getline(cin, choice); //getting  the user's input
-
-        if(choice == "Y" || choice == "y"){ // if yes:
-            
-            hash_table.erase(target); // destroys the target key.
-        return;
-
-        } //if no:
-        else if(choice == "N" || choice == "n"){
-            cout << "Not deleting the key\n";
-        }
-        else{ // if invalid input:
-            cout << "Invalid choice. Not deleting the key.\n";
-        }
-
     }
-    else{//if the key does not exist
-        cout << "Key does not exists! cannot remove.\n";
+    else{//if key is not found:
+        cout << "Key does not exist! cannot modify.\n";
     }
+
 
 }
 //modify_menu() displays the menu to modify a specfic key and validates user input
@@ -463,12 +448,13 @@ int modify_menu(){
     << "[1] Change Entry\n"
     << "[2] Add Entry\n"
     << "[3] Remove Entry\n"
+    << "[4] Display Entries\n"
     << "[0] Exit Modify Menu\n"
     << "Enter your choice: ";
 
     //using a while loop to validate the user's response:
     while(!valid){
-        cout << "Which would you like (0-3)?: ";
+        cout << "Which would you like (0-4)?: ";
         cin >> choice;
 
         if(cin.fail()){ //if not an integer:
@@ -476,7 +462,7 @@ int modify_menu(){
             cin.ignore(10000,'\n');
             cout << "Invalid Entry. Not an Integer. Try again\n";
         }
-        else if(choice > 3 || choice < 0){ // if not an option in the menu:
+        else if(choice > 4 || choice < 0){ // if not an option in the menu:
             cout << "Invalid Entry. Not within range. Try again\n";
         }
         else{// if correct:
@@ -486,6 +472,20 @@ int modify_menu(){
 
 
     return choice;
+}
+
+void display_entries(map<int, list<string>>& hash_table, int key, auto search){
+    int i = 0;
+        cout << "Key found. Displaying entries with Key value:" << key << ":\n";
+        for (auto str : search->second){
+            cout << str; // displaying the current string
+
+            //checking if there is more strings with the same ascii value to display:
+            if( i != search->second.size() - 1){ // if the current string is not the final string:
+                cout << ", ";  
+            }
+            i++; //adding to the counter
+        }
 }
 
 //modify_entry() modifies a specific entry within a key in the hash_table
@@ -499,7 +499,7 @@ void modify_entry(map<int, list<string>>& hash_table, int key){
     cout << "Enter the string you want modified: ";
     getline(cin, target_str);
 
-    //searching for the target string:
+    //searching for the target string using a range-based for loop:
     for(auto & search : hash_table[key]){
         if(search == target_str){ //if found
             cout << "String found. Enter the new string: ";
@@ -517,6 +517,21 @@ void modify_entry(map<int, list<string>>& hash_table, int key){
 
 
 }
+
+//add_entry() adds specific entry within a key in the hash_table
+//requires: a map<int, list<string>> passed by reference and an integer key
+//returns: nothing
+void add_entry(map<int, list<string>>& hash_table, int key){
+    string new_str;
+    cin.ignore(10000, '\n');
+
+    cout << "Enter the new string to add to key " << key << ": ";
+    getline(cin, new_str);
+
+    hash_table[key].push_back(new_str);
+
+}
+
 
 
 
