@@ -59,6 +59,7 @@ int main() {
 
             case 0: //exit program:
                 exit = true;
+                cout << "Exiting Program. Thank you for using it!\n";
                 break;
             case 1: // display 100 entries:
                 //displaying the first 100 entries in hash_table:
