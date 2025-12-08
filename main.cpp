@@ -9,7 +9,7 @@
 using namespace std;
 
 //universal variables:
-bool debug = true, debug_precise  = false;  int ENTRY_AMOUNT = 100, DISPLAY_NUM = 5;
+bool debug = false, debug_precise  = false;  int ENTRY_AMOUNT = 100, DISPLAY_NUM = 5;
 
 int gen_hash_index(string);
 void display_hash_table(map<int, list<string>>&);
@@ -553,12 +553,17 @@ void remove_entry(map<int, list<string>>& hash_table, int key){
     cout << "Enter the string you want removed: ";
     getline(cin, target_str);
 
+    auto&list_ref = hash_table[key];
+
     //searching for the target string using a range-based for loop:
-    for(auto & search : hash_table[key]){
-        if(search == target_str){ //if found
-            hash_table[key].remove(search);
+    for(auto search = list_ref.begin(); search != list_ref.end();){
+        if(*search == target_str){ //if found
+            search = list_ref.erase(search);
             found = true;
             cout << "String removed successfully.\n";
+        }
+        else{
+            ++search;
         }
     }
 
