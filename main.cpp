@@ -16,6 +16,7 @@ void display_hash_table(map<int, list<string>>&);
 void search_key(map<int, list<string>>&);
 void add_key(map<int, list<string>>&);
 void remove_key(map<int, list<string>>&);
+void modify_key(map<int, list<string>>&);
 int menu();
 
 int main() {
@@ -69,6 +70,7 @@ int main() {
                 remove_key(hash_table);
                 break;
             case 5: // modify a key:
+                modify_key(hash_table);
                 break;
             
             default:
@@ -291,7 +293,7 @@ void add_key(map<int, list<string>>& hash_table){
 
 }
 
-//remove_key() removes the key at the users input. will also display the key before erasing.
+//remove_key() removes the key at the users input. will also display the key before erasing. I copied alot from add_key() and search_key
 //requires: a map<int, list<string>> passed by reference
 //returns: nothing
 void remove_key(map<int, list<string>>& hash_table){
@@ -322,7 +324,7 @@ void remove_key(map<int, list<string>>& hash_table){
     //If there is key exists:
     if(search != hash_table.end()){
         int i = 0;
-        cout << "Key found. Displaying entries with ascii value:" << target << ":\n";
+        cout << "Key found. Displaying entries with Key value:" << target << ":\n";
         for (auto str : search->second){
             cout << str; // displaying the current string
 
@@ -357,6 +359,108 @@ void remove_key(map<int, list<string>>& hash_table){
         cout << "Key does not exists! cannot remove.\n";
     }
 }
+
+//modify_key() searches for a user provided key and then display all entries in the key and asks if the user wants to modify, add, or delete any entry by asking for the string.
+//requires: a map<int, list<string>> passed by reference
+//returns: nothing
+void modify_key(map<int, list<string>>& hash_table){
+    int target;
+    string choice = "F";
+    bool valid = false;
+
+    //using a while loop to validate the user's response:
+    while(!valid){
+        cout << "Enter the (integer) key to modify: ";
+        cin >> target;
+
+        if(cin.fail()){ //if not an integer:
+            cin.clear();
+            cin.ignore(10000,'\n');
+            cout << "Invalid Entry. Not an Integer. Try again\n";
+        }
+        else{// if correct:
+            valid = true;
+        }
+    }
+
+    //need to check if the key already exists:
+    auto search = hash_table.find(target);
+
+
+
+    //If there is key exists:
+    if(search != hash_table.end()){
+        int i = 0;
+        cout << "Key found. Displaying entries with Key value:" << target << ":\n";
+        for (auto str : search->second){
+            cout << str; // displaying the current string
+
+            //checking if there is more strings with the same ascii value to display:
+            if( i != search->second.size() - 1){ // if the current string is not the final string:
+                cout << ", ";  
+            }
+            i++; //adding to the counter
+        }
+
+        switch(){}
+
+        cout << "\nDo you want to remove the key " << target << "?(Y/N): ";
+
+        getline(cin, choice); //getting  the user's input
+
+        if(choice == "Y" || choice == "y"){ // if yes:
+            
+            hash_table.erase(target); // destroys the target key.
+        return;
+
+        } //if no:
+        else if(choice == "N" || choice == "n"){
+            cout << "Not deleting the key\n";
+        }
+        else{ // if invalid input:
+            cout << "Invalid choice. Not deleting the key.\n";
+        }
+
+    }
+    else{//if the key does not exist
+        cout << "Key does not exists! cannot remove.\n";
+    }
+
+}
+
+int modify_menu(){
+    int choice = 0;
+    bool valid = false;
+
+    cout << "Modify Menu:\n"
+    << "[1] Change Entry\n"
+    << "[2] Add Entry\n"
+    << "[3] Remove Entry\n"
+    << "Enter your choice: ";
+
+    //using a while loop to validate the user's response:
+    while(!valid){
+        cout << "Which would you like (1-3)?: ";
+        cin >> choice;
+
+        if(cin.fail()){ //if not an integer:
+            cin.clear();
+            cin.ignore(10000,'\n');
+            cout << "Invalid Entry. Not an Integer. Try again\n";
+        }
+        else if(choice > 3 || choice < 0){ // if not an option in the menu:
+            cout << "Invalid Entry. Not within range. Try again\n";
+        }
+        else{// if correct:
+            valid = true;
+        }
+    }
+
+
+    return choice;
+}
+
+
 
 
 
