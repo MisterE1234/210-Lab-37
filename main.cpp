@@ -9,7 +9,7 @@
 using namespace std;
 
 //universal variables:
-bool debug = false, debug_precise  = false;  int ENTRY_AMOUNT = 100, DISPLAY_NUM = 5;
+bool debug = true, debug_precise  = false;  int ENTRY_AMOUNT = 100, DISPLAY_NUM = 5;
 
 int gen_hash_index(string);
 void display_hash_table(map<int, list<string>>&);
@@ -22,7 +22,7 @@ int modify_menu();
 void modify_entry(map<int, list<string>>&, int);
 void add_entry(map<int, list<string>>&, int);
 void remove_entry(map<int, list<string>>&, int);
-void display_entries(map<int, list<string>>&, int, auto&);
+void display_entries(map<int, list<string>>&, int);
 
 int main() {
     map<int, list<string>> hash_table; //hash table: the int is the ascii value of the string
@@ -84,6 +84,9 @@ int main() {
                 break;
             
         }
+        if(debug){
+            cout << "Finished one loop of Modify_Entry()\n";
+        }
     }
 
     
@@ -105,7 +108,7 @@ int main() {
 int gen_hash_index(string str){
     int sum = 0;
     int count = 0; //for debug perposes
-    if (debug){
+    if (debug_precise){
         cout << "Calculating ascii sum for: " << str << endl;
     }
     //using a range based for loop to iterate through the string.
@@ -397,7 +400,7 @@ void modify_key(map<int, list<string>>& hash_table){
     if(search != hash_table.end()){
        
         cout << "Key found.";
-        display_entries(hash_table, target, search);
+        display_entries(hash_table, target);
         
 
         valid = false;
@@ -418,7 +421,7 @@ void modify_key(map<int, list<string>>& hash_table){
                     remove_entry(hash_table, target);
                     break;
                 case 4: //display entries
-                    display_entries(hash_table, target, search);
+                    display_entries(hash_table, target);
                     break;
                 default: //error contengcy
                     cout << "Error! wrong switch case. Exiting Modify Menu...\n";
@@ -438,6 +441,10 @@ void modify_key(map<int, list<string>>& hash_table){
 //requires:nothing
 //returns:nothing
 int modify_menu(){
+
+    if(debug){
+        cout << "Entering modify_menu()\n";
+    }
     int choice = 0;
     bool valid = false;
 
@@ -471,19 +478,24 @@ int modify_menu(){
     return choice;
 }
 
+//display_entries() displays all entries of a key in the hash_table
+//requires: a map<int, list<string>> passed by reference and an integer key
+//returns: nothing
 void display_entries(map<int, list<string>>& hash_table, int key){
     int i = 0;
-        cout << "Displaying entries:\n";
-        for (auto str : search->second){
-            cout << str; // displaying the current string
+    auto search = hash_table.find(key);
+    cout << "Displaying entries:\n";
 
-            //checking if there is more strings with the same ascii value to display:
-            if( i != search->second.size() - 1){ // if the current string is not the final string:
-                cout << ", ";  
-            }
-            i++; //adding to the counter
+    for (auto str : search->second){
+        cout << str; // displaying the current string
+
+        //checking if there is more strings with the same ascii value to display:
+        if( i != search->second.size() - 1){ // if the current string is not the final string:
+            cout << ", ";  
         }
-        cout << endl;
+        i++; //adding to the counter
+    }
+    cout << endl;
 }
 
 //modify_entry() modifies a specific entry within a key in the hash_table
