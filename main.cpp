@@ -217,7 +217,7 @@ void search_key(map<int, list<string>>& hash_table){
 
     if(search != hash_table.end()){
         int i = 0;
-        cout << "Key found. Searching entries with ascii value " << target << ":\n";
+        cout << "Key found. Displaying entries with within " << target << ":\n";
         for (auto str : search->second){
             cout << str; // displaying the current string
 
@@ -245,7 +245,7 @@ void add_key(map<int, list<string>>& hash_table){
 
     //using a while loop to validate the user's response:
     while(!valid){
-        cout << "Enter the new ascii (integer) key to add: ";
+        cout << "Enter the new (integer) key to add: ";
         cin >> new_key;
 
         if(cin.fail()){ //if not an integer:
@@ -288,6 +288,63 @@ void add_key(map<int, list<string>>& hash_table){
 
 }
 
+void remove_key(map<int, list<string>>& hash_table){
+    int target;
+    string choice = "F";
+    bool valid = false;
+
+    //using a while loop to validate the user's response:
+    while(!valid){
+        cout << "Enter the (integer) key to remove: ";
+        cin >> target;
+
+        if(cin.fail()){ //if not an integer:
+            cin.clear();
+            cin.ignore(10000,'\n');
+            cout << "Invalid Entry. Not an Integer. Try again\n";
+        }
+        else{// if correct:
+            valid = true;
+        }
+    }
+
+    //need to check if the key already exists:
+    auto search = hash_table.find(target);
+
+    if(search != hash_table.end()){
+        int i = 0;
+        cout << "Key found. Displaying entries with ascii value:" << target << ":\n";
+        for (auto str : search->second){
+            cout << str; // displaying the current string
+
+            //checking if there is more strings with the same ascii value to display:
+            if( i != search->second.size() - 1){ // if the current string is not the final string:
+                cout << ", ";  
+            }
+            i++; //adding to the counter
+        }
+
+        cout << "Do you want to remove the key " << target << "?(Y/N): ";
+
+        cin >> choice;
+        if(choice == "Y" || choice == "y"){ // if yes:
+            
+            hash_table.erase(target); // destroys the target key.
+        return;
+
+        } //if no:
+        else if(choice == "N" || choice == "n"){
+            cout << "Adding key with no strings.\n";
+        }
+        else{ // if invalid input:
+            cout << "Invalid choice. Adding key with no strings.\n";
+        }
+
+    }
+    else{
+        cout << "Key does not exists! cannot remove.\n";
+    }
+}
 
 
 
