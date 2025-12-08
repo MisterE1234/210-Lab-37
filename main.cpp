@@ -230,7 +230,9 @@ void search_key(map<int, list<string>>& hash_table){
 
 }
 
-//add_key()
+//add_key() Adds a key to the Hash_table. the user can also add a string with the key
+//requires: a map<int, list<string>> passed by reference
+//returns: nothing
 void add_key(map<int, list<string>>& hash_table){
     int new_key;
     string choice;
