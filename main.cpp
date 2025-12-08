@@ -66,6 +66,7 @@ int main() {
                 add_key(hash_table);
                 break;
             case 4: //delete a key:
+                remove_key(hash_table);
                 break;
             case 5: // modify a key:
                 break;
@@ -165,10 +166,10 @@ void display_hash_table(map<int, list<string>>& hash_table){
 
         int i = 0;
         if(pair.second.size() > DISPLAY_NUM){
-            cout << "ACII Value: " << pair.first << ": " << pair.second.size() << " Entries";
+            cout << "KEY Value: " << pair.first << ": " << pair.second.size() << " Entries";
         }
         else{
-            cout << "ACII Value: " << pair.first << " -> ";
+            cout << "KEY Value: " << pair.first << " -> ";
             for (auto str : pair.second){
             
                 cout << str; // displaying the current string
@@ -199,7 +200,7 @@ void search_key(map<int, list<string>>& hash_table){
     
     //using a while loop to validate the user's response:
     while(!valid){
-        cout << "Enter the ascii (integer) key to search for: ";
+        cout << "Enter the (integer) key to search for: ";
         cin >> target;
 
         if(cin.fail()){ //if not an integer:
@@ -266,13 +267,15 @@ void add_key(map<int, list<string>>& hash_table){
         return;
     }
 
+    cin.ignore(10000, '\n'); //clearing the buffer for the getlines
+
     //if it does not exist:
     //Asking the user if they want to add a string to the new key:
     cout << "Would you like to add a string to this key? (Y/N): ";
-    cin >> choice;
+    getline(cin, choice);
     if(choice == "Y" || choice == "y"){ // if yes:
         cout << "Enter the new string: ";
-        cin >> choice; //reusing choice
+        getline(cin, choice); //reusing choice
         hash_table[new_key].push_back(choice); // creates the new key with the string.
         return;
 
@@ -288,6 +291,9 @@ void add_key(map<int, list<string>>& hash_table){
 
 }
 
+//remove_key() removes the key at the users input. will also display the key before erasing.
+//requires: a map<int, list<string>> passed by reference
+//returns: nothing
 void remove_key(map<int, list<string>>& hash_table){
     int target;
     string choice = "F";
@@ -311,6 +317,9 @@ void remove_key(map<int, list<string>>& hash_table){
     //need to check if the key already exists:
     auto search = hash_table.find(target);
 
+
+
+    //If there is key exists:
     if(search != hash_table.end()){
         int i = 0;
         cout << "Key found. Displaying entries with ascii value:" << target << ":\n";
@@ -324,9 +333,12 @@ void remove_key(map<int, list<string>>& hash_table){
             i++; //adding to the counter
         }
 
-        cout << "Do you want to remove the key " << target << "?(Y/N): ";
+        cin.ignore(10000, '\n'); //clearing the buffer for the getlines
 
-        cin >> choice;
+        cout << "\nDo you want to remove the key " << target << "?(Y/N): ";
+
+        getline(cin, choice); //getting  the user's input
+
         if(choice == "Y" || choice == "y"){ // if yes:
             
             hash_table.erase(target); // destroys the target key.
@@ -334,14 +346,14 @@ void remove_key(map<int, list<string>>& hash_table){
 
         } //if no:
         else if(choice == "N" || choice == "n"){
-            cout << "Adding key with no strings.\n";
+            cout << "Not deleting the key\n";
         }
         else{ // if invalid input:
-            cout << "Invalid choice. Adding key with no strings.\n";
+            cout << "Invalid choice. Not deleting the key.\n";
         }
 
     }
-    else{
+    else{//if the key does not exist
         cout << "Key does not exists! cannot remove.\n";
     }
 }
